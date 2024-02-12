@@ -1,6 +1,7 @@
 {
   "name": "postaway_2_project_for_backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "Postaway Backend Project using NodeJs, MongoDB, REST API With full Functionalities",
   "main": "server.js",
   "scripts": {

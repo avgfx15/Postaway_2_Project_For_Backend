@@ -1,0 +1,82 @@
+{
+    "openapi": "3.0.0",
+        "info": {
+        "version": "1.0.0",
+            "description": "API for Postaway Social Media Application",
+                "title": "Social Media Application"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3700"
+        }
+    ],
+        "components": {
+        "securitySchemes": {
+            "JWT": {
+                "in": "header",
+                    "name": "Authorization",
+                        "type": "apiKey"
+            }
+        }
+    },
+    "_comment1": "Test Route",
+        "paths": {
+        "/": {
+            "get": {
+                "tags": [
+                    "Test Route"
+                ],
+                    "summary": "To Check API working",
+                        "description": "To check API Doc and Application working",
+                            "security": [
+                                {
+                                    "JWT": {}
+                                }
+                            ],
+                                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "_comment2": "This is for User Login Path",
+            "/api/users/signin": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                    "summary": "Login",
+                        "description": "User login to get token",
+                            "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                    "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Incorrect Credentials"
+                    }
+                }
+            }
+        }
+    }
+}
