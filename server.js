@@ -2,6 +2,7 @@
 import express from 'express';
 import swagger from 'swagger-ui-express';
 import swaggerjson from './swagger.json' assert {type: 'json'};
+import { errorHandlerMiddleware } from './src/errorHandler/errorHandler.js';
 
 
 const app = express()
@@ -16,6 +17,10 @@ app.use('/api/doc', swagger.serve, swagger.setup(swaggerjson));
 
 // $ Default Route
 app.get('/', (req, res) => res.send('Hello World!'))
+
+//? Error Handler and Logger Middleware setup
+
+app.use(errorHandlerMiddleware);
 
 app.listen(port, (err) => {
     if (err) {
