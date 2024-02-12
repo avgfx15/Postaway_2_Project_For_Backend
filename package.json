@@ -1,0 +1,15 @@
+{
+  "name": "postaway_2_project_for_backend",
+  "version": "1.0.0",
+  "description": "Postaway Backend Project using NodeJs, MongoDB, REST API With full Functionalities",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stacodev",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "swagger-ui-express": "^5.0.0"
+  }
+}
