@@ -12,7 +12,13 @@ const userControllers = new UserControllers();
 // + User Register Route
 
 userRouter.post('/signup', signUpFormValidator, (req, res, next) => {
-    userControllers.userSignUpControllers(req, res, next)
+    userControllers.userSignUpController(req, res, next)
+});
+
+// + User SignIn Route
+
+userRouter.post('/signin', (req, res, next) => {
+    userControllers.userSignInController(req, res, next)
 })
 
 

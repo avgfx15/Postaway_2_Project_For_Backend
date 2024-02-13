@@ -8,7 +8,7 @@ export default class UserControllers {
     }
 
     // +  User SignUp 
-    userSignUpControllers = async (req, res, next) => {
+    userSignUpController = async (req, res, next) => {
 
         try {
             const { name, email, password, gender } = req.body;
@@ -20,6 +20,27 @@ export default class UserControllers {
             return res.status(201).json({ success: true, message: 'User Saved Successfully', User: userSaved })
         } catch (err) {
             next(err)
+        }
+    }
+
+    // + User SignIn
+
+    userSignInController = async (req, res, next) => {
+        try {
+            const { email, password } = req.body;
+            const response = await this.userRepo.userSignInRepo(email, password);
+
+            // $ Store Token in Cookies
+
+            res.cookie('jwtToken', response.token, {
+                secure: true,
+                httpOnly: true,
+                sameSite: 'strict',
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            });
+            return res.status(201).json({ success: true, User: response.sendUser, token: response.token })
+        } catch (error) {
+            next(error);
         }
     }
 }
