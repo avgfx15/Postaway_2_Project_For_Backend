@@ -1,4 +1,5 @@
 import { logger } from '../middlewares/loggerMiddleware.js'
+import mongoose from 'mongoose'
 
 // $ Custom Error Handler Class
 export class customErrorHandler extends Error {
@@ -21,8 +22,11 @@ export const errorHandlerMiddleware = (err, req, res, next) => {
 
     // $ Check if error is instance of custom error handler
 
-    if (err instanceof customErrorHandler) {
-        return res.status(err.statusCode).json(err.message)
+    if (err instanceof mongoose.Error.ValidationError) {
+        return res.status(404).json({ success: false, message: err.message })
     }
-    return res.status(500).json("Server Error, Something went wrong. ", err.message)
+    if (err instanceof customErrorHandler) {
+        return res.status(err.statusCode).json({ success: false, message: err.message })
+    }
+    return res.status(500).json({ success: false, message: 'Something went wrong' + err.message })
 }

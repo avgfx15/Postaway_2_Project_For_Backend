@@ -3,10 +3,25 @@ import express from 'express';
 import swagger from 'swagger-ui-express';
 import swaggerjson from './swagger.json' assert {type: 'json'};
 import { errorHandlerMiddleware } from './src/errorHandler/errorHandler.js';
+import dotenv from 'dotenv'
+import connectDB from './src/config/db.js';
+import userRouter from './src/features/User/userRouter.js';
 
+
+dotenv.config();
 
 const app = express()
-const port = process.env.PORT || 8000;
+const port = process.env.PORT;
+
+//// Middleware To received JSON requests
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+
+
+//// Add All Routers
+
+app.use('/api/users', userRouter)
 
 
 
@@ -33,6 +48,7 @@ app.listen(port, (err) => {
     if (err) {
         console.log(`Error listening on port  + ${port}`);
     } else {
-        console.log(`Postaway app listening on port ${port}!`)
+        console.log(`Postaway app listening on port ${port}!`);
+        connectDB();
     }
 })

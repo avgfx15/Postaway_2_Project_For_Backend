@@ -1,5 +1,3 @@
-
-
 🍌 Objective
 
 # Goal
