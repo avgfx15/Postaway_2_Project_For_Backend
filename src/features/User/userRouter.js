@@ -1,5 +1,6 @@
 import express from 'express';
 import UserControllers from './userControllers.js';
+import { signUpFormValidator } from '../../middlewares/expressValidation.js';
 
 const userRouter = express.Router();
 
@@ -10,7 +11,7 @@ const userControllers = new UserControllers();
 
 // + User Register Route
 
-userRouter.post('/signup', (req, res, next) => {
+userRouter.post('/signup', signUpFormValidator, (req, res, next) => {
     userControllers.userSignUpControllers(req, res, next)
 })
 
