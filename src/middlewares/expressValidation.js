@@ -31,3 +31,48 @@ export const signUpFormValidator = async (req, res, next) => {
     }
     next();
 }
+
+
+// // POST Valiation
+export const postValidation = async (req, res, next) => {
+    console.log('Post Validation');
+    const rules = [
+
+        body('title').notEmpty().withMessage('Name is required.'),
+        body('location').notEmpty().withMessage('Location is required.'),
+        body('description').notEmpty().withMessage('Description is required.'),
+        body('category').notEmpty().withMessage('Category is required.'),
+        body('keywords').notEmpty().withMessage('Keywords is required.'),
+        body('images').custom((value, { req }) => {
+            console.log(req.files.image[0].mimetype);
+            console.log(value);
+            const imageType = req.files.images.map((image) => image.mimetype === 'image/jpeg' || image.mimetype === 'image/png' || image.mimetype === 'image/JGP')
+            console.log(imageType);
+            if (req.files.images[0].mimetype === 'images/jpeg' || req.files.image[0].mimetype === 'images/png') {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }).withMessage('Please upload an image Jpeg, PNG'),
+        body('documents').custom((value, { req }) => {
+            if (req.files.documents[0].mimetype === 'application/msword' || req.files.document[0].mimetype === 'application/pdf') {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }).withMessage('Please upload pdf or doc format')
+    ];
+
+
+    await Promise.all(rules.map((rule) => rule.run(req)));
+
+    const validationErrors = validationResult(req);
+
+    if (!validationErrors.isEmpty()) {
+        const errors = validationErrors.array().map((err) => err.path + " - " + err.msg);
+        return res.status(400).json(errors);
+    }
+    next();
+}

@@ -6,6 +6,7 @@ import { errorHandlerMiddleware } from './src/errorHandler/errorHandler.js';
 import dotenv from 'dotenv'
 import connectDB from './src/config/db.js';
 import userRouter from './src/features/User/userRouter.js';
+import postRouter from './src/features/Post/postRouter.js';
 
 
 dotenv.config();
@@ -20,8 +21,10 @@ app.use(express.urlencoded({ extended: false }));
 
 
 //// Add All Routers
-
+// $ User Router
 app.use('/api/users', userRouter)
+// $ Post Router
+app.use('/api/posts', postRouter)
 
 
 

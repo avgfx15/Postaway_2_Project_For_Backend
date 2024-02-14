@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { customErrorHandler } from "../../errorHandler/errorHandler.js";
 import UserModel from "./userSchema.js"
-import { logger } from '../../middlewares/loggerMiddleware.js';
 
 
 
