@@ -48,4 +48,37 @@ export default class UserRepository {
             }
         }
     }
+
+    // @ GET All Users Detalis
+
+    getAllUsersDetailsRepo = async () => {
+        const allUsers = await UserModel.find().select('name email');
+        if (!allUsers) {
+            throw new customErrorHandler(401, 'No users found')
+        } else {
+            return allUsers;
+        }
+    }
+
+    // @ GET User By Id
+
+    getUserByIdRepo = async (id) => {
+        const getUser = await UserModel.findById(id).select('name email');
+        if (!getUser) {
+            throw new customErrorHandler(401, 'User not  found')
+        } else {
+            return getUser
+        }
+    }
+
+    // * UPDATE User Details
+
+    updateUserDetailsRepo = async (updateDetails, user) => {
+        const updateUser = await UserModel.findByIdAndUpdate({ _id: user.userId }, updateDetails, { new: true });
+        if (!updateUser) {
+            throw new customErrorHandler(401, 'User not updated')
+        } else {
+            return updateUser;
+        }
+    }
 }
