@@ -18,7 +18,7 @@ var postSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        unique: true,
+        enum: ['Wonders', 'Festivals', 'Amazing India', 'Interesting Facts', 'Education', 'IT', 'Technology', 'Gadgets', 'Others',]
     },
     keywords: [
         {

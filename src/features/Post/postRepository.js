@@ -8,7 +8,7 @@ export default class PostRepository {
 
     createNewPostRepo = async (user, newPost) => {
         const createPost = new PostModel(newPost)
-        const savedPost = createPost.save();
+        const savedPost = createPost.save();        
         return savedPost;
     }
 

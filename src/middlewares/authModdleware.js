@@ -9,14 +9,14 @@ const authModdleware = async (req, res, next) => {
 
     const secretKey = process.env.jwt_SECRET;
     if (!token) {
-        throw new customErrorHandler(401, 'You are not authorized to access')
+        return res.status(401).json({ success: false, message: 'You are not authorized to access' });
     }
     try {
         const payload = await jwt.verify(token, secretKey);
         req.user = payload;
 
     } catch (error) {
-        throw new customErrorHandler(401, 'You are not authorized to access')
+        return res.status(401).json({ success: false, message: 'You are not authorized to access' });
     }
     next();
 }
