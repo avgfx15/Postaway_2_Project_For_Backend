@@ -45,11 +45,23 @@ export default class PostControllers {
 
     getPostByUserController = async (req, res, next) => {
         const userId = req.user.userId;
-        console.log(userId);
 
         try {
             const getAllPost = await this.postRepo.getAllPostByUserRepo(userId);
             return res.status(201).json({ success: true, Posts: getAllPost })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    // @ GET Post By Id
+
+    getPostByPostIdController = async (req, res, next) => {
+        const id = req.params.postId;
+
+        try {
+            const getPostByPostId = await this.postRepo.getPostByPostIdRepo(id);
+            return res.status(201).json({ success: true, Post: getPostByPostId })
         } catch (error) {
             next(error)
         }

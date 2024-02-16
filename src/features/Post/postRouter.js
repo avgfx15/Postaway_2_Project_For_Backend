@@ -24,6 +24,12 @@ postRouter.get('/all', (req, res, next) => {
 
 postRouter.get('/', authMiddleware, (req, res, next) => {
     postControllers.getPostByUserController(req, res, next)
+});
+
+// @ GET Post By PostId
+
+postRouter.get('/:postId', (req, res, next) => {
+    postControllers.getPostByPostIdController(req, res, next)
 })
 
 

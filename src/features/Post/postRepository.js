@@ -25,4 +25,10 @@ export default class PostRepository {
         return getPostByUser;
     }
 
+    // @ GET Post By PostId
+
+    getPostByPostIdRepo = async (postId) => {
+        const getPostByPostId = await PostModel.findById({ _id: postId });
+        return getPostByPostId;
+    }
 }
