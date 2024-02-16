@@ -29,4 +29,29 @@ export default class PostControllers {
             next(error)
         }
     }
+
+    // @ GET All Post
+
+    getAllPostController = async (req, res, next) => {
+        try {
+            const allPosts = await this.postRepo.getAllPostsRepo();
+            return res.status(201).json({ success: true, Posts: allPosts })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    // @ GET Post By Specific User
+
+    getPostByUserController = async (req, res, next) => {
+        const userId = req.user.userId;
+        console.log(userId);
+
+        try {
+            const getAllPost = await this.postRepo.getAllPostByUserRepo(userId);
+            return res.status(201).json({ success: true, Posts: getAllPost })
+        } catch (error) {
+            next(error)
+        }
+    }
 }

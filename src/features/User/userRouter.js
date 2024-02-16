@@ -1,7 +1,8 @@
 import express from 'express';
 import UserControllers from './userControllers.js';
 import { signUpFormValidator } from '../../middlewares/expressValidation.js';
-import authModdleware from '../../middlewares/authModdleware.js';
+import authMiddleware from '../../middlewares/authMiddleware.js';
+
 
 const userRouter = express.Router();
 
@@ -36,7 +37,7 @@ userRouter.get('/getuser/:id', (req, res, next) => {
 
 // * UPDATE User details by userId
 
-userRouter.put('/updateuser', authModdleware, (req, res, next) => {
+userRouter.put('/updateuser', authMiddleware, (req, res, next) => {
     userControllers.updateUserDetailsController(req, res, next)
 })
 

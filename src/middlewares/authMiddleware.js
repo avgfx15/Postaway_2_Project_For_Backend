@@ -4,7 +4,7 @@ import { customErrorHandler } from '../errorHandler/errorHandler.js';
 
 dotenv.config();
 
-const authModdleware = async (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
     const token = req.headers['authorization'];
 
     const secretKey = process.env.jwt_SECRET;
@@ -22,4 +22,4 @@ const authModdleware = async (req, res, next) => {
 }
 
 
-export default authModdleware;
+export default authMiddleware;
