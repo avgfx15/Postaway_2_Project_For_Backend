@@ -1,3 +1,4 @@
+import { MulterError } from "multer";
 import { customErrorHandler } from "../../errorHandler/errorHandler.js";
 import PostRepository from "./postRepository.js";
 import PostModel from "./postSchema.js";
@@ -88,13 +89,11 @@ export default class PostControllers {
                     description: description ? description : checkPostByUser.description,
                     category: category ? category : checkPostByUser.category,
                     keywords: keywords ? keywords.split(',') : checkPostByUser.keywords,
-                    // images: images ? req.files.images.map((image) => image.filename) : checkPostByUser.images,
-                    // documents: documents ? req.files.documents.map((document) => document.filename) : checkPostByUser.documents,
                 }
 
                 if (!req.files.images) {
                     const checkFileName = req.files.images.
-                    update.images = checkPostByUser.images;
+                        update.images = checkPostByUser.images;
                 } else {
                     const images = req.files.images.map((image) => image.filename);
                     update.images = images;
@@ -108,6 +107,19 @@ export default class PostControllers {
                 const updatedPost = await this.postRepo.updatePostByUserByPostIdRepo(userId, postId, update);
                 return res.status(201).json({ success: true, message: "Post updated By User Successfully", Post: updatedPost })
             }
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    // - Delete post by authorized user By post Id
+
+    deletePostByAuthorizedUserByPostIdController = async (req, res, next) => {
+        const userId = req.user.userId;
+        const postId = req.params.postId;
+        try {
+            await this.postRepo.deletePostByAuthorizedUserByPostIdRepo(userId, postId);
+            return res.status(201).json({ success: true, message: "Post deleted Successfully" })
         } catch (error) {
             next(error)
         }

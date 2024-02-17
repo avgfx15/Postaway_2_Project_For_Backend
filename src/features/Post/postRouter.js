@@ -36,6 +36,12 @@ postRouter.get('/:postId', (req, res, next) => {
 
 postRouter.put('/:postId', upload, authMiddleware, (req, res, next) => {
     postControllers.updatePostByUserByPostIdController(req, res, next)
+});
+
+// - Delete Post By authorized User By postId
+
+postRouter.delete('/:postId', authMiddleware, (req, res, next) => {
+    postControllers.deletePostByAuthorizedUserByPostIdController(req, res, next)
 })
 
 

@@ -43,4 +43,14 @@ export default class PostRepository {
             return updatedPost;
         }
     }
+
+    // - Delete Post By authorized User by PostId
+    deletePostByAuthorizedUserByPostIdRepo = async (userId, postId) => {
+        const findPost = await PostModel.findOne({ userId: userId, _id: postId });
+        if (!findPost) {
+            throw new customErrorHandler(401, 'Post not Found');
+        } else {
+            const deletePost = await PostModel.findOneAndDelete({ userId: userId, _id: postId });
+        }
+    }
 }
