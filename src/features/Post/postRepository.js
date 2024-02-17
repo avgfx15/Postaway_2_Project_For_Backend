@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import PostModel from './postSchema.js';
+import { customErrorHandler } from '../../errorHandler/errorHandler.js';
 
 
 export default class PostRepository {
@@ -30,5 +31,16 @@ export default class PostRepository {
     getPostByPostIdRepo = async (postId) => {
         const getPostByPostId = await PostModel.findById({ _id: postId });
         return getPostByPostId;
+    }
+
+    // * Update Post By User By Post Id
+    updatePostByUserByPostIdRepo = async (userId, postId, update) => {
+        const checkPostByUser = await PostModel.findOne({ userId: userId, _id: postId });
+        if (!checkPostByUser) {
+            throw new customErrorHandler(401, 'Post not Found')
+        } else {
+            const updatedPost = await PostModel.findOneAndUpdate({ userId: userId, _id: postId }, update, { new: true });
+            return updatedPost;
+        }
     }
 }

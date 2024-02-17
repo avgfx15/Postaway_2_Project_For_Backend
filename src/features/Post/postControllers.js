@@ -1,4 +1,6 @@
+import { customErrorHandler } from "../../errorHandler/errorHandler.js";
 import PostRepository from "./postRepository.js";
+import PostModel from "./postSchema.js";
 
 
 
@@ -62,6 +64,50 @@ export default class PostControllers {
         try {
             const getPostByPostId = await this.postRepo.getPostByPostIdRepo(id);
             return res.status(201).json({ success: true, Post: getPostByPostId })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    // * UPDATE Post By Id By UserId
+
+    updatePostByUserByPostIdController = async (req, res, next) => {
+        const userId = req.user.userId;
+        const postId = req.params.postId;
+        console.log(userId, postId);
+        try {
+            const checkPostByUser = await PostModel.findOne({ userId: userId, _id: postId });
+            console.log(checkPostByUser.images);
+            if (!checkPostByUser) {
+                return res.status(404).json({ success: false, message: 'You are  not authorized to update' })
+            } else {
+                const { title, location, description, category, keywords, } = req.body;
+                const update = {
+                    title: title ? title : checkPostByUser.title,
+                    location: location ? location : checkPostByUser.location,
+                    description: description ? description : checkPostByUser.description,
+                    category: category ? category : checkPostByUser.category,
+                    keywords: keywords ? keywords.split(',') : checkPostByUser.keywords,
+                    // images: images ? req.files.images.map((image) => image.filename) : checkPostByUser.images,
+                    // documents: documents ? req.files.documents.map((document) => document.filename) : checkPostByUser.documents,
+                }
+
+                if (!req.files.images) {
+                    const checkFileName = req.files.images.
+                    update.images = checkPostByUser.images;
+                } else {
+                    const images = req.files.images.map((image) => image.filename);
+                    update.images = images;
+                }
+                if (!req.files.documents) {
+                    update.documents = checkPostByUser.documents;
+                } else {
+                    const documents = req.files.documents.map((document) => document.filename);
+                    update.documents = documents;
+                }
+                const updatedPost = await this.postRepo.updatePostByUserByPostIdRepo(userId, postId, update);
+                return res.status(201).json({ success: true, message: "Post updated By User Successfully", Post: updatedPost })
+            }
         } catch (error) {
             next(error)
         }

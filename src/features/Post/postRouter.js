@@ -32,6 +32,12 @@ postRouter.get('/:postId', (req, res, next) => {
     postControllers.getPostByPostIdController(req, res, next)
 })
 
+// * Update Post By User By PostId
+
+postRouter.put('/:postId', upload, authMiddleware, (req, res, next) => {
+    postControllers.updatePostByUserByPostIdController(req, res, next)
+})
+
 
 
 export default postRouter;
