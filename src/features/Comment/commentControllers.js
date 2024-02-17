@@ -19,4 +19,29 @@ export default class CommentsControllers {
             next(error)
         }
     }
+
+    // @ GET Comment by postId
+    getCommentByPostIdController = async (req, res, next) => {
+        try {
+            const postId = req.params.postId;
+            const getCommentByPostId = await this.commentRepo.getCommentByPostIdRepo(postId);
+            return res.status(200).json({ success: true, Post: getCommentByPostId })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    // * Update Comment By Id
+
+    updateCommentByCommentIdController = async (req, res, next) => {
+        try {
+            const userId = req.user.userId;
+            const commentId = req.params.commentId;
+            const { content } = req.body;
+            const updateComment = await this.commentRepo.updateCommentByCommentIIdRepo(userId, commentId, content);
+            return res.status(201).json({ success: true, message: "Comment updated successfully", Comment: updateComment })
+        } catch (error) {
+            next(error)
+        }
+    }
 }
