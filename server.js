@@ -7,6 +7,7 @@ import dotenv from 'dotenv'
 import connectDB from './src/config/db.js';
 import userRouter from './src/features/User/userRouter.js';
 import postRouter from './src/features/Post/postRouter.js';
+import commentRouter from './src/features/Comment/commentRouter.js';
 
 
 dotenv.config();
@@ -25,6 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/users', userRouter)
 // $ Post Router
 app.use('/api/posts', postRouter)
+// $ Comment Router
+app.use('/api/comments', commentRouter)
 
 
 
