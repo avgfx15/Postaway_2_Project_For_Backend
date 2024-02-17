@@ -1,4 +1,5 @@
 import { customErrorHandler } from "../../errorHandler/errorHandler.js";
+import { logger } from "../../middlewares/loggerMiddleware.js";
 
 import PostModel from "../Post/postSchema.js"
 import CommentModel from "./commentSchema.js";
@@ -41,5 +42,23 @@ export default class CommentsRepository {
         } else {
             return updateComment;
         }
+    }
+
+    // - Delete Comment By User
+
+    deleteCommentByCommentIdRepo = async (userId, commentId) => {
+        console.log('Try to delete comment');
+        const findComment = await CommentModel.findOne({ _id: commentId, userId: userId });
+
+        if (!findComment) {
+            throw new customErrorHandler(401, 'You are not authorized to delete this comment')
+        } else {
+            const findPost = await PostModel.findOne({ _id: findComment.postId });
+            const commentIndex = findPost.comments.indexOf(commentId);
+            findPost.comments.splice(commentIndex, 1);
+            await CommentModel.findOneAndDelete({ _id: commentId, userId: userId });
+            await findPost.save();
+        }
+
     }
 }

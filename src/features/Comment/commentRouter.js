@@ -23,5 +23,11 @@ commentRouter.put('/:commentId', authMiddleware, (req, res, next) => {
     commentsControllers.updateCommentByCommentIdController(req, res, next)
 })
 
+// - Delete Comment By Id
+
+commentRouter.delete('/:commentId', authMiddleware, (req, res, next) => {
+    commentsControllers.deleteCommentByCommentIdController(req, res, next)
+})
+
 
 export default commentRouter;

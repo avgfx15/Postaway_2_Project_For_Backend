@@ -44,4 +44,17 @@ export default class CommentsControllers {
             next(error)
         }
     }
+
+    // - Delete Comment By commentId
+
+    deleteCommentByCommentIdController = async (req, res, next) => {
+        const userId = req.user.userId;
+        const commentId = req.params.commentId
+        try {
+            const deletedComment = await this.commentRepo.deleteCommentByCommentIdRepo(userId, commentId);
+            return res.status(201).json({ success: true, message: "Comment deleted successfully" })
+        } catch (error) {
+            next(error)
+        }
+    }
 }
