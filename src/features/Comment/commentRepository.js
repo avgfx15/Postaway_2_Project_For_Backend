@@ -47,7 +47,7 @@ export default class CommentsRepository {
     // - Delete Comment By User
 
     deleteCommentByCommentIdRepo = async (userId, commentId) => {
-        console.log('Try to delete comment');
+
         const findComment = await CommentModel.findOne({ _id: commentId, userId: userId });
 
         if (!findComment) {
