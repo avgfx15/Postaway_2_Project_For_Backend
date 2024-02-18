@@ -9,6 +9,7 @@ import userRouter from './src/features/User/userRouter.js';
 import postRouter from './src/features/Post/postRouter.js';
 import commentRouter from './src/features/Comment/commentRouter.js';
 import likeRouter from './src/features/Like/likeRouter.js';
+import friendRouter from './src/features/FriendShip/friendshipRouter.js';
 
 
 dotenv.config();
@@ -31,6 +32,8 @@ app.use('/api/posts', postRouter)
 app.use('/api/comments', commentRouter)
 // $ Like Router
 app.use('/api/likes', likeRouter)
+// $ Friend Router
+app.use('/api/friends', friendRouter)
 
 
 

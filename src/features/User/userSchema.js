@@ -19,7 +19,13 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         enum: ['Male', 'Female', 'Transgender']
-    }
+    },
+    friends: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Friends'
+        }
+    ]
 }, { timestamps: true }
 );
 
