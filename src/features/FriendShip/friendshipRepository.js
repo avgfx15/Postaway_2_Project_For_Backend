@@ -40,4 +40,35 @@ export default class FriendRepository {
             return getPendingRequest;
         }
     }
+
+    // @ Get Received Friend Requset 
+    receivedFriendRequestRepo = async (userId) => {
+        const receivedRequest = await FriendModel.find({ recipient: userId });
+        return receivedRequest;
+    }
+
+    // @ Get All Pending Requset
+    getAllPendingRequestRepo = async () => {
+        const getAllPendingRequest = await FriendModel.find({ status: false });
+        return getAllPendingRequest;
+    }
+
+    // @ Give response to pending
+    giveResponseToRequsetRepo = async (userId, friendId) => {
+        const findRequest = await FriendModel.findOne({ _id: friendId, recipient: userId, });
+
+        if (!findRequest) {
+            throw new customErrorHandler(400, 'No Pending friend request found found')
+        } else {
+            if (findRequest.status === false) {
+                findRequest.status = true;
+                await findRequest.save();
+                return { success: true, message: 'Friens request Accepted' };
+            } else {
+                findRequest.status = false;
+                await findRequest.save();
+                return { success: true, message: 'Friend request Rejected' };
+            }
+        }
+    }
 }
