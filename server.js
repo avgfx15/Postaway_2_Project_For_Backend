@@ -10,6 +10,7 @@ import postRouter from './src/features/Post/postRouter.js';
 import commentRouter from './src/features/Comment/commentRouter.js';
 import likeRouter from './src/features/Like/likeRouter.js';
 import friendRouter from './src/features/FriendShip/friendshipRouter.js';
+import optRouter from './src/features/OTP/otpRouter.js';
 
 
 dotenv.config();
@@ -34,7 +35,8 @@ app.use('/api/comments', commentRouter)
 app.use('/api/likes', likeRouter)
 // $ Friend Router
 app.use('/api/friends', friendRouter)
-
+// $ OTP Routes
+app.use('/api/otp', optRouter)
 
 
 
