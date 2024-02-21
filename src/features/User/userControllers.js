@@ -90,5 +90,41 @@ export default class UserControllers {
         } catch (error) {
             next(error)
         }
-    }
+    };
+
+    // @ Logout 
+    logoutUserController = async (req, res, next) => {
+        const user = req.user;
+        console.log(req.cookie('jwtToken'));
+        console.log(req);
+        try {
+            // await this.userRepo.logoutUserRepo(user);
+            const findUser = await UserModel.findById({ _id: user.userId });
+            if (!findUser) {
+                throw new customErrorHandler(401, 'User not found');
+            } else {
+                res.clearCookie('jwtToken', { path: '/' });
+                return res.status(200).json({ success: true, message: 'User logged out Successfully' })
+            }
+        } catch (error) {
+            next(error)
+        }
+    };
+
+    // @ Logout from all
+    logoutUserfromAllDevicesController = async (req, res, next) => {
+        const user = req.user;
+
+        try {
+            const findUser = await UserModel.findById({ _id: user.userId });
+            if (!findUser) {
+                throw new customErrorHandler(401, 'User not found');
+            } else {
+                res.clearCookie('jwtToken');
+                return res.status(200).json({ success: true, message: 'User logged out Successfully' })
+            }
+        } catch (error) {
+            next(error)
+        }
+    };
 }

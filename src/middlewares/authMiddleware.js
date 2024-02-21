@@ -15,6 +15,7 @@ const authMiddleware = async (req, res, next) => {
         const payload = await jwt.verify(token, secretKey);
         req.user = payload;
 
+
     } catch (error) {
         return res.status(401).json({ success: false, message: 'You are not authorized to access' });
     }

@@ -79,5 +79,15 @@ export default class UserRepository {
         } else {
             return updateUser;
         }
+    };
+
+    // @ Logout
+    logoutUserRepo = async (user) => {
+        const findUser = await UserModel.findById({ _id: user.userId });
+        if (!findUser) {
+            throw new customErrorHandler(401, 'User not found');
+        } else {
+
+        }
     }
 }

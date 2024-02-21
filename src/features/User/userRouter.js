@@ -39,6 +39,11 @@ userRouter.get('/getuser/:id', (req, res, next) => {
 
 userRouter.put('/updateuser', authMiddleware, (req, res, next) => {
     userControllers.updateUserDetailsController(req, res, next)
+});
+
+// @ Logout user
+userRouter.get('/logout', authMiddleware, (req, res, next) => {
+    userControllers.logoutUserController(req, res, next)
 })
 
 

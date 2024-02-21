@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
     ],
     resetLink: {
         data: String,
+    },
+    otp: {
+        type: Number,
     }
 }, { timestamps: true }
 );
